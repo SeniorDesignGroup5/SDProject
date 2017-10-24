@@ -19,6 +19,7 @@ myApp.controller('myCtrl', ['$http','$scope', function($http, $scope) {
     	var password = $scope.paw;
         var garage_ID = $scope.garageID;
         var floor_level = $scope.floor_level;
+        var spot = $scope.spot_number;
     	
     	console.log(username);
     	console.log(password);
@@ -27,7 +28,9 @@ myApp.controller('myCtrl', ['$http','$scope', function($http, $scope) {
             userid: username,
             pass: password,
             garageID: garage_ID,
-            floorLevel: floor_level
+            floorLevel: floor_level,
+            spotNumber: spot,
+            task: "save"
         };
 
        
@@ -149,9 +152,6 @@ myApp.controller('myCtrl', ['$http','$scope', function($http, $scope) {
         })*/
 
     };
-
-
-    
 
 
 

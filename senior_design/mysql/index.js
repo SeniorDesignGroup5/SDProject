@@ -32,6 +32,19 @@ var sha256 = function(password, salt){
     };
 };
 
+function saveSpot(req){
+
+
+	console.log("fuck yea babay");
+
+
+
+}
+
+
+
+
+
 
 //When a car enters update garage column
 app.post('/carEnters',function(req,res){
@@ -114,6 +127,8 @@ app.post('/saveSpot',function(req,res){
 
   var username = req.body.userid;
   var password = req.body.pass;
+  var garageID = req.body.garageID;
+  var task = req.body.task;
 
   pool.getConnection(function(err,connection){
 
@@ -143,19 +158,26 @@ app.post('/saveSpot',function(req,res){
             console.log(passcode);
 
             if(enc_pass.passwordHash == passcode){
-              console.log("weeeee goooooood");
-              console.log(req.body.garageID);
+	              console.log("weeeee goooooood");
+	              console.log(req.body.garageID);
 
 
-                //here is where we will store their spot
+                
+	              if(task = "save"){
+	              		saveSpot(req);
+
+	              		 res.status(200).send("Success");
+
+	              }
+	              else if(task = "retrieve"){
+	              		var spot = retrieveSpot();
 
 
+	              }
+	              else
+	              	;
 
-
-
-
-
-              res.status(200).send("Success");
+             
             }
             else{
               res.status(400).send("password incorrect");

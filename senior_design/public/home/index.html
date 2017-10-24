@@ -29,7 +29,7 @@
 						<h1>Login Information</h1>
 						<div class="input-group">
 							<input type="text" ng-model="userid" class="form-control" placeholder="User ID">
-							<input type="password" ng-model="paw" class="form-control " placeholder="Password">
+							<input type="password" pattern="[0-9]" ng-model="paw" class="form-control " placeholder="4-Digit Code">
 						</div>
 
 						<h1>Store Vehicle Location</h1>
@@ -43,7 +43,7 @@
 						</div>
 						<div class=" form-inline" style =  "margin-top: 15px;">
 							<label>Spot Number</label>
-							<input type="text" pattern="[0-9]*" ng-model="spot_number" class="form-control col-lg-offset-1" placeholder="">
+							<input type="number" pattern="[0-9]" ng-model="spot_number" class="form-control col-lg-offset-1" placeholder="">
 						</div>
 						<div class=" form-inline" style =  "margin-top: 15px;">
 							<button id="store" class="btn btn-info btn-lg" ng-click = "saveSpot()">Submit</button>
@@ -59,6 +59,7 @@
 							<button id="store" class="btn btn-info btn-lg" ng-click = "updateGarage()">Test Garage Counter</button>
 							<font size="5" class="col-lg-offset-1">it was updated!</font>
 						</div>
+						<input type="file" accept="image/*" capture="camera" />
 					</div>
 				</div>
 			</div>
