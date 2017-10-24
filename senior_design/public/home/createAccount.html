@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="createAccount">
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+<script src="/angular/angular.min.js"></script>
+
+<script src="/js/createAccount.js"></script>
+
+<body>
+		<div ng-controller = "myCtrl">
+			<nav class="navbar navbar-inverse">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="#">Garaginator</a>
+			    </div>
+			    <ul class="nav navbar-nav">
+			      <li class="active"><a href="index.html">Home</a></li>
+			      <li><a href="#">Create Account</a></li>
+			      <li><a href="#">Page 3</a></li>
+			    </ul>
+			  </div>
+			</nav>
+
+			<div class="container">
+				<div class="row">
+				<div class="col-md-4 col-md-offset-4 text-center">
+						<div class="search-box">
+							<div class="caption">
+								<h1>CREATE ACCOUNT</h1>
+							</div>
+							<div class="input-group">
+								<input type="text" ng-model="userid" class="form-control" placeholder="User ID">
+								<input type="password" ng-model="paw" class="form-control" placeholder="Password">
+								<input type="password" ng-model="pawconfirm" class="form-control" placeholder="Confirm Password">
+								<input type="submit" id="create" class="form-control" ng-click = "create()">
+							</div>
+							<h1 ng-if="Message">{{ Message }}</h1>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</body>
+
+
+</html>
