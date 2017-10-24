@@ -110,7 +110,7 @@ app.post('/carLeaves',function(req,res){
 //logs a user into the application
 app.post('/saveSpot',function(req,res){
 
-  console.log("we here");
+  console.log("testing git");
 
   var username = req.body.userid;
   var password = req.body.pass;

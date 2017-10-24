@@ -10,6 +10,8 @@ myApp.controller('myCtrl', ['$http','$scope', function($http, $scope) {
 
     $scope.garageLevels = [];
 
+    console.log("testing git");
+
     /////stores vehicle location based on user login information
     $scope.saveSpot = function() {
      	
