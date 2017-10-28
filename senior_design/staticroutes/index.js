@@ -11,3 +11,6 @@ app.use('/js', express.static(path.join(__dirname + '/../public/js/')));
 app.use('/angular', express.static(path.join(__dirname + '/../node_modules/angular/')));
 
 app.use('/css', express.static(path.join(__dirname + '/../node_modules/bootstrap/dist/css')));
+
+app.use('/angular-sanitize', express.static(path.join(__dirname + '/../node_modules/angular-sanitize/')));
+

@@ -2,27 +2,40 @@
 
 var myApp = angular.module('myApp', []);
 
-myApp.controller('myCtrl', ['$http','$scope', function($http, $scope) {
+myApp.controller('myCtrl', ['$http','$scope','$compile', function($http, $scope, $compile) {
     
 	$scope.garageIDs = [
             "A","B","C","D","E","F","G","H","I","Libra"
     ];
 
     $scope.garageLevels = [];
+    var currentSelectedLevel;
+
+    $scope.test = "Hello";
 
     console.log("testing git");
+
+    for(var i = 0; i < 3; i++){
+        var number = 50;
+        var svgTag = '<svg width="200" height="'+number+'"> <g><rect width="200" height="50" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)" /><text x="55" y="39" font-family="Verdana" font-size="35" fill="blue" ng-bind ="test"></text></g></svg>';
+   
+         var el = document.getElementById('garageMap');
+         angular.element(el).append($compile(svgTag)($scope));
+    }
+    
 
     /////stores vehicle location based on user login information
     $scope.saveSpot = function() {
      	
     	var username = $scope.userid;
-    	var password = $scope.paw;
+    	var password = $scope.password;
         var garage_ID = $scope.garageID;
         var floor_level = $scope.floor_level;
         var spot = $scope.spot_number;
     	
     	console.log(username);
     	console.log(password);
+        console.log(floor_level);
 
         var data = {
             userid: username,
@@ -33,7 +46,7 @@ myApp.controller('myCtrl', ['$http','$scope', function($http, $scope) {
             task: "save"
         };
 
-       
+        
         //checks users login information
     	$http.post('/saveSpot', data).then(
 

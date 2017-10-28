@@ -5,6 +5,8 @@
 
 <script src="/angular/angular.min.js"></script>
 
+<script src="/angular-sanitize/angular-sanitize.min.js"></script>
+
 <script src="/js/home.js"></script>
 
 <body>
@@ -29,21 +31,26 @@
 						<h1>Login Information</h1>
 						<div class="input-group">
 							<input type="text" ng-model="userid" class="form-control" placeholder="User ID">
-							<input type="password" pattern="[0-9]" ng-model="paw" class="form-control " placeholder="4-Digit Code">
+							<input type="password" ng-model="password" class="form-control " placeholder="4-Digit Code">
 						</div>
 
-						<h1>Store Vehicle Location</h1>
+						<div>
+							<h1>Store Vehicle Location</h1>
+							
+						</div>
+						
+						
 						<div class=" form-inline" style =  "margin-top: 15px;">
 							<label>Garage Name</label>
 							<select class="btn btn-info btn-lg dropdown-toggle dropdown-toggle-split col-lg-offset-1" ng-model="garageID" ng-change = "getGarageLevels()" ng-options="x for x in garageIDs"></select>
 						</div>
 						<div class=" form-inline" style =  "margin-top: 15px;">
 							<label style =  "margin-right: 15px;">Floor Level</label>   
-							<select class="btn btn-info btn-lg dropdown-toggle dropdown-toggle-split col-lg-offset-1 " ng-model="floor_level" ng-options="x for x in garageLevels"></select>
+							<select class="btn btn-info btn-lg dropdown-toggle dropdown-toggle-split col-lg-offset-1 " ng-model="floor_level" ng-options="floor for floor in garageLevels"></select>
 						</div>
 						<div class=" form-inline" style =  "margin-top: 15px;">
 							<label>Spot Number</label>
-							<input type="number" pattern="[0-9]" ng-model="spot_number" class="form-control col-lg-offset-1" placeholder="">
+							<input type="number" ng-model="spot_number" class="form-control col-lg-offset-1" placeholder="">
 						</div>
 						<div class=" form-inline" style =  "margin-top: 15px;">
 							<button id="store" class="btn btn-info btn-lg" ng-click = "saveSpot()">Submit</button>
@@ -51,6 +58,7 @@
 						</div>
 
 						<h1>Retrieve Vehicle Location</h1>
+
 						<div class=" form-inline" style =  "margin-top: 15px;">
 							<Button id="retrieve" class="btn btn-info btn-lg" ng-click = "login()">Find your car!</Button>
 							<font size="5" class="col-lg-offset-1">it was found!</font>
@@ -59,7 +67,45 @@
 							<button id="store" class="btn btn-info btn-lg" ng-click = "updateGarage()">Test Garage Counter</button>
 							<font size="5" class="col-lg-offset-1">it was updated!</font>
 						</div>
-						<input type="file" accept="image/*" capture="camera" />
+						
+
+						<input class= "form-inline" style =  "margin-top: 15px;" type="file" accept="image/*" capture="camera" />
+
+						<h1 >Map of Garage Floor</h1>
+
+						<div id = "garageMap">
+							<svg width="200" height="50">
+							  <g>
+							  	<rect width="200" height="50" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)" />
+							    <text x="55" y="39" font-family="Verdana" font-size="35" fill="blue" ng-bind ="test"></text>
+							  </g>
+							</svg>
+							<svg width="200" height="50">
+							  <g>
+							  	<rect width="200" height="50" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)" />
+							    <text x="55" y="39" font-family="Verdana" font-size="35" fill="blue" ng-bind ="test"></text>
+							  </g>
+							</svg>
+							<svg width="200" height="50">
+							  <g>
+							  	<rect width="200" height="50" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)" />
+							    <text x="55" y="39" font-family="Verdana" font-size="35" fill="blue" ng-bind ="test"></text>
+							  </g>
+							</svg>
+							<svg width="200" height="50">
+							  <g>
+							  	<rect width="200" height="50" style="fill:rgb(255,0,0);stroke-width:3;stroke:rgb(0,0,0)" />
+							    <text x="55" y="39" font-family="Verdana" font-size="35" fill="blue" ng-bind ="test"></text>
+							  </g>
+							</svg>
+							<svg width="200" height="50">
+							  <g>
+							  	<rect width="200" height="50" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)" />
+							    <text x="55" y="39" font-family="Verdana" font-size="35" fill="blue" ng-bind ="test"></text>
+							  </g>
+							</svg>
+						</div>
+						
 					</div>
 				</div>
 			</div>

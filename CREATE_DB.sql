@@ -10,22 +10,21 @@ CREATE TABLE users(
 );
 
 CREATE TABLE garages(
-	garage_id 		INTEGER		NOT NULL AUTO_INCREMENT,
-	garage_name 	VARCHAR(20) 	NOT NULL,
+	garage_name 	VARCHAR(20) 	NOT NULL PRIMARY KEY,
 	number_of_floors 	INTEGER 	NOT NULL,
 	number_of_spots		INTEGER 	NOT NULL,
-	number_of_current_vehicles INTEGER	NOT NULL,
-	PRIMARY KEY(garage_id)
+	number_of_current_vehicles INTEGER	NOT NULL
+	
 );
 
 CREATE TABLE vehicle_location(
 	account_id		INTEGER		NOT NULL,
-	garage_id 		INTEGER		NOT NULL,
+	garage_id 		VARCHAR(20)		NOT NULL,
 	floor_level		VARCHAR(10)     NOT NULL,
 	current_numbered_spot	INTEGER NOT NULL, 
 	PRIMARY KEY (account_id),
 	FOREIGN KEY (account_id) REFERENCES users(account_id),
-	FOREIGN KEY (garage_id) REFERENCES garages(garage_id)
+	FOREIGN KEY (garage_id) REFERENCES garages(garage_name)
 );
 
 CREATE TABLE day_parking_pass(

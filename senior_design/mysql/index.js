@@ -127,8 +127,22 @@ app.post('/saveSpot',function(req,res){
 
   var username = req.body.userid;
   var password = req.body.pass;
-  var garageID = req.body.garageID;
+  var garage_ID = req.body.garageID;
+  var floorLevel = req.body.floorLevel;
+  var currentSpot = req.body.spotNumber;
   var task = req.body.task;
+
+  console.log(username);
+  console.log(password);
+  console.log(garage_ID);
+  console.log(floorLevel);
+  console.log(currentSpot);
+
+  if((!username) || (!password) || (!garage_ID) || (!floorLevel) || (!currentSpot)){
+    console.log("check worked");
+    res.status(403).send('You did not input all of your login information');
+    return;
+  }
 
   pool.getConnection(function(err,connection){
 
@@ -143,10 +157,12 @@ app.post('/saveSpot',function(req,res){
 
           //get salt
           connection.query(sql, username,function(err,rows){
-            connection.release();
+            //connection.release();
             
-           if(err)
+           if(err){
               res.status(403).send('User doesnt exit');
+              return;
+           }
               
 
             var salt = rows[0].salt;
@@ -164,13 +180,32 @@ app.post('/saveSpot',function(req,res){
 
                 
 	              if(task = "save"){
-	              		saveSpot(req);
+	              		
+                    var saveSpot = "INSERT INTO vehicle_location (account_id, garage_id, floor_level, current_numbered_spot) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE garage_id=?, floor_level=?, current_numbered_spot=?";
+                    var inserts = [username, garage_ID, floorLevel, currentSpot, garage_ID, floorLevel, currentSpot];
+                    saveSpot = mysql.format(saveSpot, inserts);
+                    console.log(saveSpot);
+	             
 
-	              		 res.status(200).send("Success");
+                    connection.query(saveSpot,function(err,rows){
+
+                      if(err){
+                        connection.release();
+                        res.status(403).send('Could not save spot');
+                        return;
+                      }
+                      else{
+                        connection.release();
+                        res.send('Spot Saved');
+                      }
+
+
+
+                    });
 
 	              }
 	              else if(task = "retrieve"){
-	              		var spot = retrieveSpot();
+	              		var select = "SELECT * FROM "
 
 
 	              }
@@ -180,6 +215,7 @@ app.post('/saveSpot',function(req,res){
              
             }
             else{
+              connection.release();
               res.status(400).send("password incorrect");
             }
       
