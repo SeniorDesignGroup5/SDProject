@@ -32,14 +32,7 @@ var sha256 = function(password, salt){
     };
 };
 
-function saveSpot(req){
 
-
-	console.log("fuck yea babay");
-
-
-
-}
 
 
 
@@ -130,7 +123,6 @@ app.post('/saveSpot',function(req,res){
   var garage_ID = req.body.garageID;
   var floorLevel = req.body.floorLevel;
   var currentSpot = req.body.spotNumber;
-  var task = req.body.task;
 
   console.log(username);
   console.log(password);
@@ -140,7 +132,7 @@ app.post('/saveSpot',function(req,res){
 
   if((!username) || (!password) || (!garage_ID) || (!floorLevel) || (!currentSpot)){
     console.log("check worked");
-    res.status(403).send('You did not input all of your login information');
+    res.status(403).send('Missing Required Paramters');
     return;
   }
 
@@ -177,42 +169,25 @@ app.post('/saveSpot',function(req,res){
 	              console.log("weeeee goooooood");
 	              console.log(req.body.garageID);
 
+            		
+                var saveSpot = "INSERT INTO vehicle_location (account_id, garage_id, floor_level, current_numbered_spot) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE garage_id=?, floor_level=?, current_numbered_spot=?";
+                var inserts = [username, garage_ID, floorLevel, currentSpot, garage_ID, floorLevel, currentSpot];
+                saveSpot = mysql.format(saveSpot, inserts);
+                console.log(saveSpot);
+           
 
-                
-	              if(task = "save"){
-	              		
-                    var saveSpot = "INSERT INTO vehicle_location (account_id, garage_id, floor_level, current_numbered_spot) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE garage_id=?, floor_level=?, current_numbered_spot=?";
-                    var inserts = [username, garage_ID, floorLevel, currentSpot, garage_ID, floorLevel, currentSpot];
-                    saveSpot = mysql.format(saveSpot, inserts);
-                    console.log(saveSpot);
-	             
+                connection.query(saveSpot,function(err,rows){
 
-                    connection.query(saveSpot,function(err,rows){
-
-                      if(err){
-                        connection.release();
-                        res.status(403).send('Could not save spot');
-                        return;
-                      }
-                      else{
-                        connection.release();
-                        res.send('Spot Saved');
-                      }
-
-
-
-                    });
-
-	              }
-	              else if(task = "retrieve"){
-	              		var select = "SELECT * FROM "
-
-
-	              }
-	              else
-	              	;
-
-             
+                  if(err){
+                    connection.release();
+                    res.status(403).send('Could not save spot');
+                    return;
+                  }
+                  else{
+                    connection.release();
+                    res.send('Spot Saved');
+                  }
+                });  
             }
             else{
               connection.release();
@@ -304,4 +279,89 @@ app.put('/garageLevels',function(req,res){
 
     });
   });
+});
+
+
+
+
+
+app.post('/retrieveSpot',function(req,res){
+
+  console.log("testing git");
+
+  var username = req.body.userid;
+  var password = req.body.pass;
+  
+
+  console.log(username);
+  console.log(password);
+
+  if((!username) || (!password)){
+    console.log("check worked");
+    res.status(403).send('Missing Required Paramters');
+    return;
+  }
+
+  pool.getConnection(function(err,connection){
+
+          if (err) {
+            connection.release();
+            res.json({"code" : 100, "status" : "Error in connection database"});
+            return;
+          }
+
+
+          var sql = "SELECT salt,passcode FROM users WHERE account_id = ?";
+
+          //get salt
+          connection.query(sql, username,function(err,rows){
+            //connection.release();
+            
+           if(err){
+              res.status(403).send('User doesnt exit');
+              return;
+           }
+              
+
+            var salt = rows[0].salt;
+
+            var enc_pass = sha256(password, salt);
+            var passcode = rows[0].passcode;
+
+            console.log(enc_pass);
+            console.log(passcode);
+
+            if(enc_pass.passwordHash == passcode){
+                console.log("weeeee goooooood");
+                console.log(req.body.garageID);
+   
+                var retrieveSpot = "SELECT garage_id, floor_level, current_numbered_spot FROM vehicle_location WHERE account_id = ?";
+                var inserts = [username];
+                retrieveSpot = mysql.format(retrieveSpot, inserts);
+                console.log(retrieveSpot);
+           
+
+                connection.query(retrieveSpot,function(err,rows){
+
+                  if(err){
+                    connection.release();
+                    res.status(403).send('Could not retrieve spot');
+                    return;
+                  }
+                  else{
+                    connection.release();
+                    res.send(rows);
+                  }
+                });
+                 
+            }
+            else{
+              connection.release();
+              res.status(400).send("password incorrect");
+            }
+      
+        });
+
+  });
+
 });

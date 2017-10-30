@@ -37,13 +37,27 @@ myApp.controller('myCtrl', ['$http','$scope','$compile', function($http, $scope,
     	console.log(password);
         console.log(floor_level);
 
+
+        if(spot <= 0){
+            $scope.errorCheck = true;
+            return;
+        }
+        else
+            $scope.errorCheck = false;
+
+        if((!username) || (!password)){
+            $scope.errorCheckLogin = true;
+            return;
+        }
+        else
+            scope.errorCheckLogin = false;
+
         var data = {
             userid: username,
             pass: password,
             garageID: garage_ID,
             floorLevel: floor_level,
             spotNumber: spot,
-            task: "save"
         };
 
         
@@ -158,11 +172,47 @@ myApp.controller('myCtrl', ['$http','$scope','$compile', function($http, $scope,
     //retrieves vehicle location based on user login information
     $scope.retrieveSpot = function() {
         
-       /* $http.post('')
+        var username = $scope.userid;
+        var password = $scope.password;
 
-        $http.post('/garageData', data).then(function success(response){
-            console.log("weeeeee heerea yea");
-        })*/
+        var data = {
+            userid: username,
+            pass: password
+        };
+
+        if((!username) || (!password)){
+            $scope.errorCheckLoginRetrieve = true;
+            return;
+        }
+        else
+            scope.errorCheckLoginRetrieve = false;
+
+        $http.post('/retrieveSpot', data).then(
+
+            function success(response){
+            
+                console.log("success?");
+
+                console.log(response.data);    
+
+                $scope.userSpot = "Garage: " + response.data[0].garage_id + "   Floor: " + response.data[0].floor_level + "   Number: " + response.data[0].current_numbered_spot;
+
+
+            //$scope.passcode2 = response.data[0].passcode;
+            //console.log($scope.passcode2);   
+           }, 
+
+           function err(response){
+            
+                console.log(response);
+        
+            }
+
+        );
+
+
+
+
 
     };
 
