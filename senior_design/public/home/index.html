@@ -27,61 +27,39 @@
 
 			<div class="container">
 				<div class="row">
-					<div class="col-md-10">
-						<table class="table">
-						  <thead>
-						    <tr >
-						      <th class = "text-center">Garage Name</th>
-						      <th class = "text-center">Max Amount of Spots</th>
-						      <th class = "text-center">Current Amount of Vehicles in Garage</th>
-						    </tr>
-						  </thead>
-						  <tbody class = "text-center">
-						    <tr>
-						      <td>A</td>
-						      <td>1000</td>
-						      <td>500</td>
-						    </tr>
-						    <tr>
-						      <td>B</td>
-						      <td>1000</td>
-						      <td>400</td>
-						    </tr>
-						    <tr>
-						      <td>C</td>
-						      <td>1000</td>
-						      <td>300</td>
-						    </tr>
-						  </tbody>
-						</table>
+					<div class="col-sm-6">
 
-						<h1>Login Information</h1>
-						<div class="input-group">
-							<input type="text" ng-model="userid" class="form-control" placeholder="User ID">
-							<input type="password" ng-model="password" class="form-control " placeholder="4-Digit Code">
+						<!--Login Information-->
+						<div class = "text-center">
+							<div class="input-group">
+								<h1>Login Information</h1>
+								<input type="text" ng-model="userid" class="form-control" placeholder="User ID">
+								<input type="password" ng-model="password" class="form-control" placeholder="4-Digit Code">
+							</div>
 						</div>
 
 						<div>
-							<h1>Store Vehicle Location by inputting information or by taking a picture of a QR code</h1>
-							
+							<h1>Store Vehicle Location</h1>
 						</div>
 						
 						
 						<div class=" form-inline" style =  "margin-top: 15px;">
-							<label style =  "margin-right: 30px;">Garage Name</label>
-							<select class="btn btn-info btn-lg dropdown-toggle dropdown-toggle-split col-lg-offset-1" ng-model="garageID" ng-change = "getGarageLevels()" ng-options="x for x in garageIDs"></select>
+							<label style =  "margin-right: 30px;">Garage Name:</label>
+							<select class="btn btn-info btn-lg dropdown-toggle dropdown-toggle-split col-lg-offset-1 text-dark" ng-model="garageID" ng-change = "getGarageLevels()" ng-options="x for x in garageIDs"></select>
 						</div>
 						<div class=" form-inline" style =  "margin-top: 15px;">
-							<label style =  "margin-right: 45px;">Floor Level</label>   
+							<label style =  "margin-right: 45px;">Floor Level:</label>   
 							<select class="btn btn-info btn-lg dropdown-toggle dropdown-toggle-split col-lg-offset-1 " ng-model="floor_level" ng-options="floor for floor in garageLevels"></select>
 						</div>
 						<div class=" form-inline" style =  "margin-top: 15px;">
-							<label>Spot Number</label>
-							<input type="number" ng-model="spot_number" class="form-control col-lg-offset-1" placeholder="">
+							<label>Spot Number:</label>
+							<input type="number" ng-model="spot_number" class="form-control" style =  "margin-left: 78px; placeholder="">
 						</div>
 						<div class=" form-inline" style =  "margin-top: 15px;">
-							<label>QR code</label>
-							<input class= "form-inline" style =  "margin-top: 15px;" type="file" accept="image/*" capture="camera" />
+							<label>QR code:</label>
+							<label class="btn btn-info btn-file col-lg-offset-2">
+							    Browse <input type="file" style="display: none;" type="file" accept="image/*" capture="camera">
+							</label>
 						</div>
 						<div class=" form-inline" style =  "margin-top: 15px;">
 							<button id="store" class="btn btn-info btn-lg" ng-click = "saveSpot()">Submit</button>
@@ -144,8 +122,44 @@
 							  </g>
 							</svg>
 						</div>
-						
+						<!--End of Left Column-->
 					</div>
+					<!--Start of Right Column-->
+					<div class="col-sm-6">
+						<h1>Garage Information</h1>
+						<table class="table">
+						  <thead>
+						    <tr >
+						      <th class = "text-center">Garage Name</th>
+						      <th class = "text-center">Max Amount of Spots</th>
+						      <th class = "text-center">Current Amount of Vehicles in Garage</th>
+						    </tr>
+						  </thead>
+						  <tbody class = "text-center">
+						    <tr>
+						      <td>A</td>
+						      <td>1000</td>
+						      <td>500</td>
+						    </tr>
+						    <tr>
+						      <td>B</td>
+						      <td>1000</td>
+						      <td>400</td>
+						    </tr>
+						    <tr>
+						      <td>C</td>
+						      <td>1000</td>
+						      <td>300</td>
+						    </tr>
+						  </tbody>
+						</table>
+					</div>
+
+
+
+
+
+
 				</div>
 			</div>
 		</div>
