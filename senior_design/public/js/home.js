@@ -9,7 +9,7 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
     ];
 
     $scope.garageLevels = [];
-    var currentSelectedLevel;
+    $scope.successSaveSpot = false;
 
     $scope.test = "Hello";
 
@@ -70,7 +70,7 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
     		
                 console.log("success?");
 
-                    
+                $scope.successSaveSpot = true;    
 
     		//$scope.passcode2 = response.data[0].passcode;
     		//console.log($scope.passcode2);   

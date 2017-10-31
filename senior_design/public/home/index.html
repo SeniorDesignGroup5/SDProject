@@ -53,23 +53,25 @@
 						</div>
 						<div class=" form-inline" style =  "margin-top: 15px;">
 							<label>Spot Number:</label>
-							<input type="number" ng-model="spot_number" class="form-control" style =  "margin-left: 78px; placeholder="">
+							<input type="number" ng-model="spot_number" class="form-control" style =  "margin-left: 78px;" placeholder="Spot #">
 						</div>
 						<div class=" form-inline" style =  "margin-top: 15px;">
 							<label>QR code:</label>
-							<label class="btn btn-info btn-file col-lg-offset-2">
+							<label class="btn btn-info btn-file" style = "margin-left: 107px;">
 							    Browse <input type="file" style="display: none;" type="file" accept="image/*" capture="camera">
 							</label>
 						</div>
-						<div class=" form-inline" style =  "margin-top: 15px;">
+						<div class="form-inline" style =  "margin-top: 15px;">
 							<button id="store" class="btn btn-info btn-lg" ng-click = "saveSpot()">Submit</button>
-							<font size="5" class="col-lg-offset-1">it was stored!</font>
 						</div>
 						<div ng-show = "errorCheck" class="form-inline alert alert-danger" style =  "margin-top: 15px;">
 						  <strong>SMFH</strong> You cant save a spot that doesn't exist!
 						</div>
 						<div ng-show = "errorCheckLogin" class="form-inline alert alert-danger" style =  "margin-top: 15px;">
 						  <strong>SMFH</strong> Need to input (ALL) of your user information!
+						</div>
+						<div ng-show = "successSaveSpot" class="form-inline alert alert-success" style =  "margin-top: 15px;">
+						  <strong>Atta Boy</strong> You successfully saved your spot
 						</div>
 
 						<h1>Retrieve Vehicle Location</h1>
