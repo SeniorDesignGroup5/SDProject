@@ -365,3 +365,38 @@ app.post('/retrieveSpot',function(req,res){
   });
 
 });
+
+
+
+//When a car enters update garage column
+app.get('/garageData',function(req,res){
+
+  
+
+  pool.getConnection(function(err,connection){
+
+
+          if (err) {
+            connection.release();
+            res.json({"code" : 100, "status" : "Error in connection database"});
+            return;
+          }
+
+          console.log("we here");
+
+          var sql = "SELECT garage_name, number_of_spots, number_of_current_vehicles FROM garages";
+         
+          connection.query(sql,function(err,rows){
+          
+            connection.release();
+            
+            if(err)
+              res.status(404).send("Unable to find garage data");
+            else
+              res.status(200).send(rows);
+
+        });
+
+  });
+
+});

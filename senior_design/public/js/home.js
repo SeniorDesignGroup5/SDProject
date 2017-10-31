@@ -2,7 +2,7 @@
 
 var myApp = angular.module('myApp', []);
 
-myApp.controller('myCtrl', ['$http','$scope','$compile', function($http, $scope, $compile) {
+myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($http, $scope, $compile,$timeout) {
     
 	$scope.garageIDs = [
             "A","B","C","D","E","F","G","H","I","Libra"
@@ -12,6 +12,8 @@ myApp.controller('myCtrl', ['$http','$scope','$compile', function($http, $scope,
     var currentSelectedLevel;
 
     $scope.test = "Hello";
+
+    garageData();
 
     console.log("testing git");
 
@@ -155,19 +157,32 @@ myApp.controller('myCtrl', ['$http','$scope','$compile', function($http, $scope,
             
     };
 
-    //dunno yet
-    $scope.init = function() {
-        
-       /* $http.post('')
-
-        $http.post('/garageData', data).then(function success(response){
-            console.log("weeeeee heerea yea");
-        })*/
-
-    };
 
     
-  
+    function garageData(){
+
+        $http.get('/garageData').then(
+
+            function success(response){
+                $scope.garageData = response.data;
+                console.log(response.data);
+                $timeout(garageData, 5000);
+            },
+            function error(response){
+                console.log("there was an error!");
+            }
+        )
+
+    }
+
+    $scope.garageStatus = function (max, current){
+
+        if(current >= max)
+            return true;
+        else 
+            return false;
+
+    }
 
     //retrieves vehicle location based on user login information
     $scope.retrieveSpot = function() {
@@ -185,7 +200,7 @@ myApp.controller('myCtrl', ['$http','$scope','$compile', function($http, $scope,
             return;
         }
         else
-            scope.errorCheckLoginRetrieve = false;
+            $scope.errorCheckLoginRetrieve = false;
 
         $http.post('/retrieveSpot', data).then(
 
