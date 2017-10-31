@@ -52,7 +52,7 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
             return;
         }
         else
-            scope.errorCheckLogin = false;
+            $scope.errorCheckLogin = false;
 
         var data = {
             userid: username,
