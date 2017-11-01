@@ -10,8 +10,9 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
 
     $scope.garageLevels = [];
     $scope.successSaveSpot = false;
+  
 
-    $scope.test = "Hello";
+    $scope.test = 222;
 
     garageData();
 
@@ -190,6 +191,9 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
         var username = $scope.userid;
         var password = $scope.password;
 
+        $scope.userDoesntExist = false;
+        $scope.incorrectPassword = false;
+
         var data = {
             userid: username,
             pass: password
@@ -219,8 +223,20 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
 
            function err(response){
             
-                console.log(response);
-        
+                console.log(response.status);
+
+                if(response.status == 403)
+                {
+                    console.log("we made it?");
+                    $scope.userDoesntExist = true;
+                }
+                else if(response.status == 400){
+                    $scope.incorrectPassword = true;
+                }
+                else{
+                    $scope.incorrectPassword = false;
+                    $scope.userDoesntExist = false;
+                }
             }
 
         );

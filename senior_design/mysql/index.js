@@ -317,8 +317,8 @@ app.post('/retrieveSpot',function(req,res){
           connection.query(sql, username,function(err,rows){
             //connection.release();
             
-           if(err){
-              res.status(403).send('User doesnt exit');
+           if(err || (!(rows.length > 0))){
+              res.status(403).send('User doesnt exist');
               return;
            }
               
@@ -343,7 +343,7 @@ app.post('/retrieveSpot',function(req,res){
 
                 connection.query(retrieveSpot,function(err,rows){
 
-                  if(err){
+                  if(err (!(rows.length > 0))){
                     connection.release();
                     res.status(403).send('Could not retrieve spot');
                     return;
