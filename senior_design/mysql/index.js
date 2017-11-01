@@ -132,7 +132,7 @@ app.post('/saveSpot',function(req,res){
 
   if((!username) || (!password) || (!garage_ID) || (!floorLevel) || (!currentSpot)){
     console.log("check worked");
-    res.status(403).send('Missing Required Paramters');
+    res.status(404).send('Missing Required Paramters');
     return;
   }
 
@@ -178,9 +178,9 @@ app.post('/saveSpot',function(req,res){
 
                 connection.query(saveSpot,function(err,rows){
 
-                  if(err || (!(rows.length > 0))){
+                  if(err){
                     connection.release();
-                    res.status(403).send('Could not save spot');
+                    res.status(400).send('Could not save spot');
                     return;
                   }
                   else{
@@ -212,8 +212,6 @@ app.post('/create',function(req,res){
   var salt = genRandomString(16);
   var passwordData = sha256(password, salt);
 
-  console.log('Passwordhash = '+passwordData.passwordHash);
-  console.log('nSalt = '+passwordData.salt);
 
   pool.getConnection(function(err,connection){
 
@@ -343,7 +341,7 @@ app.post('/retrieveSpot',function(req,res){
 
                 connection.query(retrieveSpot,function(err,rows){
 
-                  if(err (!(rows.length > 0))){
+                  if(err || (!(rows.length > 0))){
                     connection.release();
                     res.status(403).send('Could not retrieve spot');
                     return;

@@ -30,6 +30,10 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
     /////stores vehicle location based on user login information
     $scope.saveSpot = function() {
      	
+        $scope.userDoesntExistSub = false;
+        $scope.incorrectPasswordSub = false;
+        $scope.errorCheck = false;
+
     	var username = $scope.userid;
     	var password = $scope.password;
         var garage_ID = $scope.garageID;
@@ -39,6 +43,14 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
     	console.log(username);
     	console.log(password);
         console.log(floor_level);
+
+
+         if((!username) || (!password) || (!garage_ID) || (!floor_level) || (!spot)){
+            console.log("check worked");
+            $scope.errorCheckLogin = true;
+            return;
+        }
+
 
 
         if(spot <= 0){
@@ -80,6 +92,18 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
            function err(response){
     		
                 console.log(response);
+                if(response.status == 403)
+                {
+                    console.log("we made it?");
+                    $scope.userDoesntExistSub = true;
+                }
+                else if(response.status == 400){
+                    $scope.incorrectPasswordSub = true;
+                }
+                else{
+                    $scope.incorrectPasswordSub = false;
+                    $scope.userDoesntExistSub = false;
+                }
     	
             }
 
