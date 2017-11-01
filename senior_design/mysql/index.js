@@ -151,7 +151,7 @@ app.post('/saveSpot',function(req,res){
           connection.query(sql, username,function(err,rows){
             //connection.release();
             
-           if(err || !(rows.length > 0)){
+           if(err || (!(rows.length > 0))){
               res.status(403).send('User doesnt exit');
               return;
            }
@@ -178,7 +178,7 @@ app.post('/saveSpot',function(req,res){
 
                 connection.query(saveSpot,function(err,rows){
 
-                  if(err){
+                  if(err || (!(rows.length > 0))){
                     connection.release();
                     res.status(403).send('Could not save spot');
                     return;
