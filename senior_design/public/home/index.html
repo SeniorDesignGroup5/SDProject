@@ -5,11 +5,12 @@
 
 <script src="/angular/angular.min.js"></script>
 
-<script src="/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="/jsqr/jsQR.js"></script>
 
 <script src="/js/home.js"></script>
 
 <body>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<div ng-app="myApp">
 		<div ng-controller = "myCtrl"  data-ng-init="init()">
 			<nav class="navbar navbar-inverse">
@@ -55,15 +56,34 @@
 							<label>Spot Number:</label>
 							<input type="number" ng-model="spot_number" class="form-control" style =  "margin-left: 78px;" placeholder="Spot #">
 						</div>
+
+
+
+						<!--QR Code Button-->
 						<div class=" form-inline" style =  "margin-top: 15px;">
 							<label>QR code:</label>
 							<label class="btn btn-info btn-file" style = "margin-left: 107px;">
-							    Browse <input type="file" style="display: none;" type="file" accept="image/*" capture="camera">
+							    Browse <input id = "fileImg" type="file" style="display: none;" ng-model="file" accept="image/*" capture="camera">
+
 							</label>
+							<label ng-model = "fileID">{{fileID}}</label>
 						</div>
+						
+						<div class="form-inline" style =  "margin-top: 15px;">
+							<button id="canvas" class="btn btn-info btn-lg" ng-click = "onFileSelected()">Submit</button>
+						</div>
+
+
+
+						<!--Save Spot Button-->
 						<div class="form-inline" style =  "margin-top: 15px;">
 							<button id="store" class="btn btn-info btn-lg" ng-click = "saveSpot()">Submit</button>
 						</div>
+
+
+
+
+						<!--Error Checking-->
 						<div ng-show = "errorCheck" class="form-inline alert alert-danger" style =  "margin-top: 15px;">
 						  <strong>SMFH</strong> You cant save a spot that doesn't exist!
 						</div>

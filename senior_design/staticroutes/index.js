@@ -14,3 +14,10 @@ app.use('/css', express.static(path.join(__dirname + '/../node_modules/bootstrap
 
 app.use('/angular-sanitize', express.static(path.join(__dirname + '/../node_modules/angular-sanitize/')));
 
+app.use('/qrcode-reader', express.static(path.join(__dirname + '/../node_modules/qrcode-reader/')));
+
+
+app.use('/angular-sanitize', express.static(path.join(__dirname + '/../node_modules/angular-sanitize/')));
+
+
+app.use('/jsqr', express.static(path.join(__dirname + '/../node_modules/jsqr/dist/')));

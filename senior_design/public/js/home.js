@@ -18,6 +18,104 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
 
     console.log("testing git");
 
+
+    $scope.onFileSelected = function(){
+
+        console.log("we here")
+        var filesUpload = document.getElementById("fileImg").files
+        console.log(filesUpload[0]);
+        
+        var reader = new FileReader();
+
+        $scope.fileID = filesUpload[0].name;
+
+        reader.onload = function(event) {
+
+            
+                
+
+            var file = event.target.result;
+
+            //this just displays the photo back onto a HTML element
+            //imgtag.src = file;
+
+            //make sure file gets read in
+            //console.log(file);
+
+            //create new image
+            var img = new Image();
+
+            //load image
+            img.src = event.target.result;
+
+            //once image loads, run parser
+            img.onload = function(){
+
+
+                console.log(this.width);
+                console.log(this.height);
+
+
+                var mycanvas = document.createElement('canvas');
+                mycanvas.id = "myimage";
+                mycanvas.width = this.width;
+                mycanvas.height = this.height;
+
+                var imgtag = document.getElementById("myimage");
+                var ctx    = mycanvas.getContext("2d");
+                ctx.drawImage(this, 0, 0, this.width, this.height);
+               
+
+                var imgdata = ctx.getImageData(0,0,this.width,this.height);
+
+                var rgba = imgdata.data;
+                console.log(rgba.length);
+
+                //bitmap works and gets returned
+                var binarizedImage = jsQR.binarizeImage(rgba, this.width, this.height);
+                console.log(binarizedImage);
+
+                
+                var location = jsQR.locateQRInBinaryImage(binarizedImage);
+                console.log(location);
+
+                if (!location) {
+                  return;
+                }
+
+
+                var rawQR = jsQR.extractQRFromBinaryImage(binarizedImage, location);
+                console.log(rawQR);
+                if (!rawQR) {
+                  return;
+                }
+
+                var myvar = jsQR.decodeQR(rawQR);
+                var myjson = JSON.parse(myvar);
+                console.log(myjson.garage_id);
+                
+                if(myjson)
+                {
+                     $scope.fileID = myjson;
+                }
+
+                console.log(jsQR.decodeQR(rawQR));
+
+
+            }
+
+        };
+
+        reader.readAsDataURL(filesUpload[0]);
+
+    }
+
+
+
+
+
+
+
     for(var i = 0; i < 3; i++){
         var number = 50;
         var svgTag = '<svg width="200" height="'+number+'"> <g><rect width="200" height="50" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)" /><text x="55" y="39" font-family="Verdana" font-size="35" fill="blue" ng-bind ="test"></text></g></svg>';
