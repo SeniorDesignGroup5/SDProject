@@ -31,82 +31,16 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
 
         reader.onload = function(event) {
 
-            
-                
-
-            var file = event.target.result;
-
-            //this just displays the photo back onto a HTML element
-            //imgtag.src = file;
-
-            //make sure file gets read in
-            //console.log(file);
-
-            //create new image
-            var img = new Image();
-
-            //load image
-            img.src = event.target.result;
-
-            //once image loads, run parser
-            img.onload = function(){
-
-
-                console.log(this.width);
-                console.log(this.height);
-
-
-                var mycanvas = document.createElement('canvas');
-                mycanvas.id = "myimage";
-                mycanvas.width = this.width;
-                mycanvas.height = this.height;
-
-                var imgtag = document.getElementById("myimage");
-                var ctx    = mycanvas.getContext("2d");
-                ctx.drawImage(this, 0, 0, this.width, this.height);
-               
-
-                var imgdata = ctx.getImageData(0,0,this.width,this.height);
-
-                var rgba = imgdata.data;
-                console.log(rgba.length);
-
-                //bitmap works and gets returned
-                var binarizedImage = jsQR.binarizeImage(rgba, this.width, this.height);
-                console.log(binarizedImage);
-
-                
-                var location = jsQR.locateQRInBinaryImage(binarizedImage);
-                console.log(location);
-
-                if (!location) {
-                  return;
-                }
-
-
-                var rawQR = jsQR.extractQRFromBinaryImage(binarizedImage, location);
-                console.log(rawQR);
-                if (!rawQR) {
-                  return;
-                }
-
-                var myvar = jsQR.decodeQR(rawQR);
-                var myjson = JSON.parse(myvar);
-                console.log(myjson.garage_id);
-                
-                if(myjson)
-                {
-                     $scope.fileID = myjson;
-                }
-
-                console.log(jsQR.decodeQR(rawQR));
-
-
-            }
-
+            var myvar = qrcode.decode(event.target.result);
+                      
         };
 
         reader.readAsDataURL(filesUpload[0]);
+
+        qrcode.callback = function(data){
+        	console.log(data);
+        	$scope.fileID = data;
+        }
 
     }
 

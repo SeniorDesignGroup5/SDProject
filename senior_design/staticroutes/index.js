@@ -12,4 +12,5 @@ app.use('/angular', express.static(path.join(__dirname + '/../node_modules/angul
 
 app.use('/css', express.static(path.join(__dirname + '/../node_modules/bootstrap/dist/css')));
 
-app.use('/jsqr', express.static(path.join(__dirname + '/../node_modules/jsqr/dist/')));
+app.use('/jsqr', express.static(path.join(__dirname + '/../public/jsqr/')));
+
