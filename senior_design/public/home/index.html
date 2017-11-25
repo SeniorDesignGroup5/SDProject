@@ -26,6 +26,7 @@
 <script src="/jsqr/databr.js"></script>
 
 
+
 <script src="/js/home.js"></script>
 
 <body>
@@ -40,7 +41,6 @@
 			    <ul class="nav navbar-nav">
 			      <li class="active"><a href="#">Home</a></li>
 			      <li><a href="createAccount.html">Create Account</a></li>
-			      <li><a href="#">Page 3</a></li>
 			    </ul>
 			  </div>
 			</nav>
@@ -93,9 +93,11 @@
 
 						
 						<h1 class = "text-center">Store Vehicle Location</h1>
-						
+
 						
 						<div class ="">
+							
+							<font size = "3">(Fill out the information below OR submit a picture of a QR code located at your vehicles location)</font>
 							<div class="form-inline" style =  "margin-top: 15px;">
 								<label style =  "margin-right: 30px;">
 									<font size = "3"> Garage Name:</font>
@@ -127,12 +129,6 @@
 								</label>
 							<label ng-model = "fileID">{{fileID}}</label>
 							</div>
-
-
-							<div class="form-inline" style =  "margin-top: 15px;">
-								<button id="canvas" class="btn btn-info btn-block active" ng-click = "onFileSelected()">Submit QR</button>
-							</div>
-
 
 
 							<!--Save Spot Button-->
@@ -167,6 +163,9 @@
 						</div>
 						<div ng-show = "incorrectPasswordSub" class="form-inline alert alert-danger" style =  "margin-top: 15px;">
 						  <strong>SMFH</strong> Your passcode is incorrect
+						</div>
+						<div ng-show = "qrError" class="form-inline alert alert-danger" style =  "margin-top: 15px;">
+						  <strong>SMFH</strong> Error Reading the QR Code Take another picture and try again
 						</div>
 
 						<h1 class = "text-center">Retrieve Vehicle Location</h1>

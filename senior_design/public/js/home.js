@@ -19,36 +19,6 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
     console.log("testing git");
 
 
-    $scope.onFileSelected = function(){
-
-        console.log("we here")
-        var filesUpload = document.getElementById("fileImg").files
-        console.log(filesUpload[0]);
-        
-        var reader = new FileReader();
-
-        $scope.fileID = filesUpload[0].name;
-
-        reader.onload = function(event) {
-
-            var myvar = qrcode.decode(event.target.result);
-                      
-        };
-
-        reader.readAsDataURL(filesUpload[0]);
-
-        qrcode.callback = function(data){
-        	console.log(data);
-        	$scope.fileID = data;
-        }
-
-    }
-
-
-
-
-
-
 
     for(var i = 0; i < 3; i++){
         var number = 50;
@@ -71,77 +41,162 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
         var garage_ID = $scope.garageID;
         var floor_level = $scope.floor_level;
         var spot = $scope.spot_number;
-    	
-    	console.log(username);
-    	console.log(password);
-        console.log(floor_level);
+        
+
+        var filesUpload = document.getElementById("fileImg").files
+
+        if(filesUpload.length != 0){
+            console.log("we found QR");
+
+            var reader = new FileReader();
+
+            $scope.fileID = filesUpload[0].name;
+
+            reader.onload = function(event) {
+
+                var myvar = qrcode.decode(event.target.result);
+                
+            };
+
+            reader.readAsDataURL(filesUpload[0]);
+          
+
+            qrcode.callback = function(data){
+                console.log(data);
 
 
-         if((!username) || (!password) || (!garage_ID) || (!floor_level) || (!spot)){
-            console.log("check worked");
-            $scope.errorCheckLogin = true;
-            return;
-        }
+                if(data == "error decoding QR Code"){
+                    $scope.qrError = true;
+                    return;
+                }
+                else if((!username) || (!password)){
+                    $scope.errorCheckLogin = true;
+                    return;
+                }else{
+                    $scope.errorCheckLogin = false;
+                    $scope.qrError = false;
+                }
 
 
+                var spotData = JSON.parse(data);
+                console.log(spotData);
 
-        if(spot <= 0){
-            $scope.errorCheck = true;
-            return;
+                //grab QR Code data and set variables
+
+
+                $scope.fileID = data;
+                var finalData = {
+                    userid: username,
+                    pass: password,
+                    garageID: spotData.garage_id,
+                    floorLevel: spotData.floor_level,
+                    spotNumber: spotData.spot_number
+                };
+                console.log(finalData);
+        
+                //checks users login information
+                $http.post('/saveSpot', finalData).then(
+
+                    function success(response){
+                    
+                        console.log("success?");
+
+                        $scope.successSaveSpot = true;    
+
+                    //$scope.passcode2 = response.data[0].passcode;
+                    //console.log($scope.passcode2);   
+                   }, 
+
+                   function err(response){
+                    
+                        console.log(response);
+                        if(response.status == 403)
+                        {
+                            console.log("we made it?");
+                            $scope.userDoesntExistSub = true;
+                        }
+                        else if(response.status == 400){
+                            $scope.incorrectPasswordSub = true;
+                        }
+                        else{
+                            $scope.incorrectPasswordSub = false;
+                            $scope.userDoesntExistSub = false;
+                        }
+                
+                    }
+
+                );
+
+            }
         }
         else
-            $scope.errorCheck = false;
+        {
 
-        if((!username) || (!password)){
-            $scope.errorCheckLogin = true;
-            return;
-        }
-        else
-            $scope.errorCheckLogin = false;
+            console.log("check spots");
+            console.log(spot);
+            if((!username) || (!password) || (!garage_ID) || (!floor_level) || (!spot)){
+                console.log("check worked");
+                $scope.errorCheckLogin = true;
+                return;
+            }
+            else
+                $scope.errorCheckLogin = false;
 
-        var data = {
-            userid: username,
-            pass: password,
-            garageID: garage_ID,
-            floorLevel: floor_level,
-            spotNumber: spot,
-        };
+
+            if(spot <= 0){
+                $scope.errorCheck = true;
+                return;
+            }
+            else
+                $scope.errorCheck = false;
+
+
+
+            var data = {
+                userid: username,
+                pass: password,
+                garageID: garage_ID,
+                floorLevel: floor_level,
+                spotNumber: spot,
+            };
 
         
-        //checks users login information
-    	$http.post('/saveSpot', data).then(
+            //checks users login information
+            $http.post('/saveSpot', data).then(
 
-            function success(response){
-    		
-                console.log("success?");
+                function success(response){
+                
+                    console.log("success?");
 
-                $scope.successSaveSpot = true;    
+                    $scope.successSaveSpot = true;    
 
-    		//$scope.passcode2 = response.data[0].passcode;
-    		//console.log($scope.passcode2);   
-    	   }, 
+                //$scope.passcode2 = response.data[0].passcode;
+                //console.log($scope.passcode2);   
+               }, 
 
-           function err(response){
-    		
-                console.log(response);
-                if(response.status == 403)
-                {
-                    console.log("we made it?");
-                    $scope.userDoesntExistSub = true;
+               function err(response){
+                
+                    console.log(response);
+                    if(response.status == 403)
+                    {
+                        console.log("we made it?");
+                        $scope.userDoesntExistSub = true;
+                    }
+                    else if(response.status == 400){
+                        $scope.incorrectPasswordSub = true;
+                    }
+                    else{
+                        $scope.incorrectPasswordSub = false;
+                        $scope.userDoesntExistSub = false;
+                    }
+            
                 }
-                else if(response.status == 400){
-                    $scope.incorrectPasswordSub = true;
-                }
-                else{
-                    $scope.incorrectPasswordSub = false;
-                    $scope.userDoesntExistSub = false;
-                }
-    	
-            }
 
-        );
-			
-    };
+            );
+
+        } 
+    			
+    }
 
     //gets levels when garage name changes
     $scope.getGarageLevels = function() {
