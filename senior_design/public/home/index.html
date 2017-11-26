@@ -36,7 +36,7 @@
 			<nav class="navbar navbar-inverse">
 			  <div class="container-fluid">
 			    <div class="navbar-header">
-			      <a class="navbar-brand" href="#">Garaginator</a>
+			      <a class="navbar-brand" href="#">The Garaginator</a>
 			    </div>
 			    <ul class="nav navbar-nav">
 			      <li class="active"><a href="#">Home</a></li>
@@ -56,6 +56,7 @@
 						      <th class = "text-center">Garage Name</th>
 						      <th class = "text-center">Max Amount of Spots</th>
 						      <th class = "text-center">Current Amount of Vehicles in Garage</th>
+						      <th class = "text-center">Spots Available</th>
 						      <th class = "text-center">Garage Status</th>
 						    </tr>
 						  </thead>
@@ -64,6 +65,7 @@
 							    <td>{{data.garage_name}}</td>
 							    <td>{{data.number_of_spots}}</td>
 							    <td>{{data.number_of_current_vehicles}}</td>
+							    <td>{{spotsAvailable(data.number_of_spots,data.number_of_current_vehicles)}}</td>
 							    <td ng-if = "garageStatus(data.number_of_spots,data.number_of_current_vehicles)">
 						      		<svg height="20" width="20">
 								  		<circle class = "text-centered" cx="10" cy="10" r="8" stroke="black" stroke-width="1" fill="red" />
