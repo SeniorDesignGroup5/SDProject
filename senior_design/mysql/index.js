@@ -42,81 +42,67 @@ var sha256 = function(password, salt){
 //When a car enters update garage column
 app.post('/carEnters',function(req,res){
 
-  console.log("we here");
+  console.log("Car is entering");
 
   var garageName = req.body.garageID;
+
+  var plusCar = req.body.plus;
+
+  var minusCar = req.body.minus;
+
+ 
+
+  //get final delta of cars in garage
+  var finalCarAmount = plusCar - minusCar;
+
+
+  console.log(garageName);
+  console.log(finalCarAmount);
 
   pool.getConnection(function(err,connection){
 
 
           if (err) {
-            connection.release();
-            res.json({"code" : 100, "status" : "Error in connection database"});
+            res.status(403).send('Error with connecting to DB');
             return;
           }
 
-          console.log("we here");
+          if(finalCarAmount < 0){
+          	finalCarAmount = finalCarAmount * -1;
+          	var sql = "UPDATE garages SET number_of_current_vehicles = number_of_current_vehicles - ? WHERE garage_name = ?";
+          }
+          else
+          	var sql = "UPDATE garages SET number_of_current_vehicles = number_of_current_vehicles + ? WHERE garage_name = ?";
+          
+          var inserts = [finalCarAmount, garageName];
+          var data = mysql.format(sql, inserts);
 
-          var sql = "UPDATE garages SET number_of_current_vehicles = number_of_current_vehicles + 1 WHERE garage_name = ?";
+          console.log(data);
 
           
-          connection.query(sql, garageName,function(err,rows){
+          connection.query(data, function(err,rows){
           
             connection.release();
             
             if(err)
               res.status(403).send('Error with garageID');
             else
-              res.status(200).send("Success");
+            {
+            	var result = "+" + plusCar + " -" + minusCar;
+            	res.status(202).send(result);
+            }
 
         });
 
   });
 
 });
-
-//when a car leaves update the garages column
-app.post('/carLeaves',function(req,res){
-
-  console.log("we here");
-
-  var garageName = req.body.garageID;
-
-  pool.getConnection(function(err,connection){
-
-
-          if (err) {
-            connection.release();
-            res.json({"code" : 100, "status" : "Error in connection database"});
-            return;
-          }
-
-          console.log("we here");
-
-          var sql = "UPDATE garages SET number_of_current_vehicles = number_of_current_vehicles - 1 WHERE garage_name = ? AND number_of_current_vehicles > 0";
-
-          
-          connection.query(sql, garageName,function(err,rows){
-          
-            connection.release();
-            console.log(err);
-            if(err)
-              res.status(403).send('Error with garageID');
-            else
-              res.status(200).send("Success");
-
-        });
-
-  });
-
-});
-
-
 
 //logs a user into the application
 app.post('/saveSpot',function(req,res){
 
   console.log("testing git");
+  console.log(req);
 
   var username = req.body.userid;
   var password = req.body.pass;
@@ -348,7 +334,16 @@ app.post('/retrieveSpot',function(req,res){
                   }
                   else{
                     connection.release();
-                    res.send(rows);
+                    
+                    console.log(rows);
+
+                    console.log(rows.garage_id);
+
+                    var result = "GARAGE " + rows[0].garage_id + " FLR:" + rows[0].floor_level + " SPOT NUM " + rows[0].current_numbered_spot;
+
+                    console.log(result);
+
+                    res.send(result);
                   }
                 });
                  

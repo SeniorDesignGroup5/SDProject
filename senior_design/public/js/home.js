@@ -297,10 +297,7 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
     }
 
     $scope.spotsAvailable = function (max, current){
-
-        console.log("lets do some math");
         return (max - current);
-
     }
 
     //retrieves vehicle location based on user login information
