@@ -100,33 +100,36 @@
 						<div class ="">
 							
 							<font size = "3">(Fill out the information below OR submit a picture of a QR code located at your vehicles location)</font>
-							<div class="form-inline" style =  "margin-top: 15px;">
-								<label style =  "margin-right: 30px;">
+							<div class = "row" style =  "margin-top: 30px;">
+								<label class = "col-md-4" = style =  "margin-right: 0px;">
 									<font size = "3"> Garage Name:</font>
 								</label>
-								<select class="btn btn-info btn-lg dropdown-toggle dropdown-toggle-split col-lg-offset-2 text-dark" ng-model="garageID" ng-change = "getGarageLevels()" ng-options="x for x in garageIDs"></select>
+								<select class="btn btn-info btn-lg dropdown-toggle dropdown-toggle-split text-dark" ng-model="garageID" ng-change = "getGarageLevels()" ng-options="x for x in garageIDs"></select>
 							</div>
-							<div class=" form-inline" style =  "margin-top: 15px;">
-								<label style =  "margin-right: 45px;">
+
+
+							<div  class = "row" style =  "margin-top: 30px;">
+								<label class = "col-md-4" style =  "margin-right: 0px;">
 									<font size = "3"> Floor Level:</font>
 								</label>   
-
-								<select class="btn btn-info btn-lg dropdown-toggle dropdown-toggle-split  col-lg-offset-2" ng-model="floor_level" ng-options="floor for floor in garageLevels"></select>
+								<select class="btn btn-info btn-lg dropdown-toggle dropdown-toggle-split" ng-model="floor_level" ng-options="floor for floor in garageLevels"></select> 
 							</div>
-							<div class=" form-inline" style =  "margin-top: 15px;">
-								<label>
+
+							<!--Spot Number-->
+							<div class="row" style =  "margin-top: 30px;">
+								<label class = "col-md-4">
 									<font size = "3">Spot Number:</font>
 								</label>
-								<input type="number" ng-model="spot_number" class="form-control col-lg-offset-1 btn-block" style =  "margin-left: 122px;" placeholder="Spot #">
+								<input type="number" ng-model="spot_number" class="" style =  "width: 100px"" placeholder="Spot #">
 							</div>
 
 
 							<!--QR Code Button-->
-							<div class=" form-inline" style =  "margin-top: 15px;">
-								<label>
+							<div class="row" style =  "margin-top: 30px;">
+								<label class = "col-md-4">
 									<font size = "3">QR code:</font>
 								</label>
-								<label class="btn btn-info btn-file" style = "margin-left: 155px;">
+								<label class="btn btn-info btn-file" style = "">
 								    Browse <input id = "fileImg" type="file" style="display: none;" ng-model="file" accept="image/*" capture="camera">
 								</label>
 							<label ng-model = "fileID">{{fileID}}</label>
@@ -134,7 +137,7 @@
 
 
 							<!--Save Spot Button-->
-							<div class="form-inline" style =  "margin-top: 15px;">
+							<div class="form-inline" style =  "margin-top: 30px;">
 								<button id="store" class="btn btn-info btn-block active" ng-click = "saveSpot()">Submit</button>
 							</div>
 
@@ -176,10 +179,35 @@
 							<Button id="retrieve" class="btn btn-info btn-lg active btn-block" ng-click = "retrieveSpot()">Find your car!</Button>
 							<font size="5" class="col-lg-offset-1">{{userSpot}}</font>
 						</div>
-						<div class=" form-inline" style =  "margin-top: 15px;">
+
+						<table class="table table-bordered table-striped" style =  "margin-top: 15px;">
+						  <thead>
+						    <tr >
+						      <th class = "text-center">Garage Name</th>
+						      <th class = "text-center">Floor Level</th>
+						      <th class = "text-center">Spot Number</th>
+						    </tr>
+						  </thead>
+						  <tr>
+							  <td>{{rGarageName}}</td>
+							  <td>{{rFlr}}</td>
+							  <td>{{rSpot}}</td>
+						  </tr>
+						 </table>
+
+
+
+
+
+
+
+						
+						<!--<div class=" form-inline" style =  "margin-top: 15px;">
 							<button id="store" class="btn btn-info btn-lg active btn-block" ng-click = "updateGarage()">Test Garage Counter</button>
 							<font size="5" class="col-lg-offset-1"></font>
-						</div>
+						</div>-->
+
+
 						<div ng-show = "errorCheckLoginRetrieve" class="form-inline alert alert-danger" style =  "margin-top: 15px;">
 						  <strong>SMFH</strong> Need to input (ALL) of your user information!
 						</div>
@@ -194,7 +222,7 @@
 
 						<h1 class = "text-center">Map of Garage Floor</h1>
 
-						<div id = "garageMap">
+						<!--<div id = "garageMap">
 							<svg width="200" height="50">
 							  <g>
 							  	<rect width="200" height="50" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)" />
@@ -225,7 +253,7 @@
 							    <text x="55" y="39" font-family="Verdana" font-size="35" fill="blue" ng-bind ="test"></text>
 							  </g>
 							</svg>
-						</div>
+						</div>-->
 
 
 

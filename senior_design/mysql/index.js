@@ -171,7 +171,7 @@ app.post('/saveSpot',function(req,res){
                   }
                   else{
                     connection.release();
-                    res.send('Spot Saved');
+                    res.status(200).send('   Spot Saved   ');
                   }
                 });  
             }
@@ -339,11 +339,11 @@ app.post('/retrieveSpot',function(req,res){
 
                     console.log(rows.garage_id);
 
-                    var result = "GARAGE " + rows[0].garage_id + " FLR:" + rows[0].floor_level + " SPOT NUM " + rows[0].current_numbered_spot;
+                    var result = "GARAGE:" + rows[0].garage_id + " FLR:" + rows[0].floor_level + " SPOT NUM " + rows[0].current_numbered_spot;
 
                     console.log(result);
 
-                    res.send(result);
+                    res.status(200).send(result);
                   }
                 });
                  

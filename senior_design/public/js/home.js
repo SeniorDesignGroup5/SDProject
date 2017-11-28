@@ -329,7 +329,20 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
 
                 console.log(response.data);    
 
-                $scope.userSpot = "Garage: " + response.data[0].garage_id + "   Floor: " + response.data[0].floor_level + "   Number: " + response.data[0].current_numbered_spot;
+                var garageName = response.data.split("GARAGE ");
+                garageName = garageName[1].split(" FLR");
+
+                var flr = response.data.split("FLR: ");
+                flr = flr[1].split(" SPOT");
+
+                var spot = response.data.split("SPOT NUM ");
+
+                var result =  "Garage: " + garageName[0] + " Floor: " + flr[0] + " Spot Number: " + spot[1];
+
+                $scope.rGarageName = garageName[0];
+                $scope.rFlr = flr[0];
+                $scope.rSpot = spot[1];
+                //$scope.userSpot = result;
 
 
             //$scope.passcode2 = response.data[0].passcode;
