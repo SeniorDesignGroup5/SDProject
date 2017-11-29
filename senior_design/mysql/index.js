@@ -50,12 +50,11 @@ app.post('/carEnters',function(req,res){
 
   var minusCar = req.body.minus;
 
- 
 
   //get final delta of cars in garage
   var finalCarAmount = plusCar - minusCar;
 
-
+  console.log(garageName);
   console.log(garageName);
   console.log(finalCarAmount);
 
@@ -101,8 +100,6 @@ app.post('/carEnters',function(req,res){
 //logs a user into the application
 app.post('/saveSpot',function(req,res){
 
-  console.log("testing git");
-  console.log(req);
 
   var username = req.body.userid;
   var password = req.body.pass;
@@ -110,11 +107,7 @@ app.post('/saveSpot',function(req,res){
   var floorLevel = req.body.floorLevel;
   var currentSpot = req.body.spotNumber;
 
-  console.log(username);
-  console.log(password);
-  console.log(garage_ID);
-  console.log(floorLevel);
-  console.log(currentSpot);
+
 
   if((!username) || (!password) || (!garage_ID) || (!floorLevel) || (!currentSpot)){
     console.log("check worked");
@@ -148,8 +141,7 @@ app.post('/saveSpot',function(req,res){
             var enc_pass = sha256(password, salt);
             var passcode = rows[0].passcode;
 
-            console.log(enc_pass);
-            console.log(passcode);
+          
 
             if(enc_pass.passwordHash == passcode){
 	              console.log("weeeee goooooood");
@@ -159,7 +151,7 @@ app.post('/saveSpot',function(req,res){
                 var saveSpot = "INSERT INTO vehicle_location (account_id, garage_id, floor_level, current_numbered_spot) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE garage_id=?, floor_level=?, current_numbered_spot=?";
                 var inserts = [username, garage_ID, floorLevel, currentSpot, garage_ID, floorLevel, currentSpot];
                 saveSpot = mysql.format(saveSpot, inserts);
-                console.log(saveSpot);
+                
            
 
                 connection.query(saveSpot,function(err,rows){
@@ -306,24 +298,23 @@ app.post('/retrieveSpot',function(req,res){
               return;
            }
               
-
+            //create Salt
             var salt = rows[0].salt;
 
+            //encode password with salt
             var enc_pass = sha256(password, salt);
+            
+            //get passcode from DB
             var passcode = rows[0].passcode;
 
-            console.log(enc_pass);
-            console.log(passcode);
-
+            //check for match
             if(enc_pass.passwordHash == passcode){
-                console.log("weeeee goooooood");
-                console.log(req.body.garageID);
    
                 var retrieveSpot = "SELECT garage_id, floor_level, current_numbered_spot FROM vehicle_location WHERE account_id = ?";
+                
+                //prepare statement
                 var inserts = [username];
                 retrieveSpot = mysql.format(retrieveSpot, inserts);
-                console.log(retrieveSpot);
-           
 
                 connection.query(retrieveSpot,function(err,rows){
 
@@ -334,12 +325,8 @@ app.post('/retrieveSpot',function(req,res){
                   }
                   else{
                     connection.release();
-                    
-                    console.log(rows);
 
-                    console.log(rows.garage_id);
-
-                    var result = "GARAGE:" + rows[0].garage_id + " FLR:" + rows[0].floor_level + " SPOT NUM " + rows[0].current_numbered_spot;
+                    var result = "GARAGE:" + rows[0].garage_id + " FLOOR:" + rows[0].floor_level + "SPOT NUM " + rows[0].current_numbered_spot;
 
                     console.log(result);
 

@@ -329,15 +329,16 @@ myApp.controller('myCtrl', ['$http','$scope','$compile','$timeout', function($ht
 
                 console.log(response.data);    
 
-                var garageName = response.data.split("GARAGE ");
-                garageName = garageName[1].split(" FLR");
+                var garageName = response.data.split("GARAGE:");
+                console.log(garageName);
+                garageName = garageName[1].split(" FLOOR");
 
-                var flr = response.data.split("FLR: ");
-                flr = flr[1].split(" SPOT");
+                var flr = response.data.split("FLOOR:");
+                flr = flr[1].split("SPOT");
 
                 var spot = response.data.split("SPOT NUM ");
 
-                var result =  "Garage: " + garageName[0] + " Floor: " + flr[0] + " Spot Number: " + spot[1];
+                var result =  "Garage: " + garageName[0] + " Floor: " + flr[0] + "  Spot Number: " + spot[1];
 
                 $scope.rGarageName = garageName[0];
                 $scope.rFlr = flr[0];

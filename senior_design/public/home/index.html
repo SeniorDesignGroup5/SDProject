@@ -47,7 +47,7 @@
 
 			<div class="container">
 				<div class="row">
-					<!--Start of Right Column-->
+					<!--Start of Left Column-->
 					<div class="col-sm-6">
 						<h1 class = "text-center">Garage Information</h1>
 						<table class="table table-bordered table-striped">
@@ -80,6 +80,7 @@
 						  </tbody>
 						</table>
 						
+
 					</div>
 
 					<div class="col-sm-6">
@@ -89,7 +90,7 @@
 							<h1>Login Information</h1>
 							<div class="input-group btn-block">
 								<input type="text" ng-model="userid" class="form-control" placeholder="User ID">
-								<input type="password" ng-model="password" class="form-control" placeholder="4-Digit Code">
+								<input type="password" ng-model="password" class="form-control" placeholder="4-Digit Passcode">
 							</div>
 						</div>
 
@@ -155,22 +156,22 @@
 
 						<!--Error Checking-->
 						<div ng-show = "errorCheck" class="form-inline alert alert-danger" style =  "margin-top: 15px;">
-						  <strong>SMFH</strong> You cant save a spot that doesn't exist!
+						  <strong>OH NO!</strong> You cant save a spot that doesn't exist!
 						</div>
 						<div ng-show = "errorCheckLogin" class="form-inline alert alert-danger" style =  "margin-top: 15px;">
-						  <strong>SMFH</strong> Need to input (ALL) of your user information!
+						  <strong>OH NO!</strong> You need to input (ALL) of your user information!
 						</div>
 						<div ng-show = "successSaveSpot" class="form-inline alert alert-success" style =  "margin-top: 15px;">
-						  <strong>Atta Boy</strong> You successfully saved your spot
+						  <strong>AWESOME!</strong> You successfully saved your spot
 						</div>
 						<div ng-show = "userDoesntExistSub" class="form-inline alert alert-danger" style =  "margin-top: 15px;">
-						  <strong>SMFH</strong> Your username does not exist
+						  <strong>OH NO!</strong> Your username does not exist
 						</div>
 						<div ng-show = "incorrectPasswordSub" class="form-inline alert alert-danger" style =  "margin-top: 15px;">
-						  <strong>SMFH</strong> Your passcode is incorrect
+						  <strong>OH NO!</strong> Your passcode is incorrect
 						</div>
 						<div ng-show = "qrError" class="form-inline alert alert-danger" style =  "margin-top: 15px;">
-						  <strong>SMFH</strong> Error Reading the QR Code Take another picture and try again
+						  <strong>OH NO!</strong> Error Reading the QR Code Take another picture and try again
 						</div>
 
 						<h1 class = "text-center">Retrieve Vehicle Location</h1>
@@ -257,7 +258,7 @@
 
 
 
-						<!--End of Left Column-->
+						<!--End of Right Column-->
 					</div>
 					
 
